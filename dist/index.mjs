@@ -15328,7 +15328,7 @@ function hexhashOfURL(url) {
 
 function imageLabelExists(hexhash) {
    return new Promise((resolve, reject) => {
-      axios__WEBPACK_IMPORTED_MODULE_3__.head(`https://ghcr.io/v2/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}/${packageName}/manifests/${hexhash}`, {validateStatus:null, headers:{"Authorization":`Bearer ${Buffer.from(token).toString('base64')}`}}).then((resp) => {
+      axios__WEBPACK_IMPORTED_MODULE_3__.head(`https://ghcr.io/v2/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner.toLowerCase()}/${packageName}/manifests/${hexhash}`, {validateStatus:null, headers:{"Authorization":`Bearer ${Buffer.from(token).toString('base64')}`}}).then((resp) => {
          switch(resp.status) {
             case 404:
                resolve(false);
@@ -15344,7 +15344,7 @@ function imageLabelExists(hexhash) {
 }
 
 try {
-   const urlBase = `https://raw.githubusercontent.com/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha}`;
+   const urlBase = `https://raw.githubusercontent.com/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.owner.toLowerCase()}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.repo.repo}/${_actions_github__WEBPACK_IMPORTED_MODULE_1__.context.sha}`;
    let platforms = (await axios__WEBPACK_IMPORTED_MODULE_3__.get(`${urlBase}/${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('platform-file', {required: true})}`, {headers:{"Authorization": `Bearer ${_actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput('password')}`}})).data;
 
    let missingPlatforms = [];  //platforms that need to be rebuilt

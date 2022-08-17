@@ -18,7 +18,7 @@ function hexhashOfURL(url) {
 
 function imageLabelExists(hexhash) {
    return new Promise((resolve, reject) => {
-      axios.head(`https://ghcr.io/v2/${github.context.repo.owner}/${packageName}/manifests/${hexhash}`, {validateStatus:null, headers:{"Authorization":`Bearer ${Buffer.from(token).toString('base64')}`}}).then((resp) => {
+      axios.head(`https://ghcr.io/v2/${github.context.repo.owner.toLowerCase()}/${packageName}/manifests/${hexhash}`, {validateStatus:null, headers:{"Authorization":`Bearer ${Buffer.from(token).toString('base64')}`}}).then((resp) => {
          switch(resp.status) {
             case 404:
                resolve(false);
@@ -34,7 +34,7 @@ function imageLabelExists(hexhash) {
 }
 
 try {
-   const urlBase = `https://raw.githubusercontent.com/${github.context.repo.owner}/${github.context.repo.repo}/${github.context.sha}`;
+   const urlBase = `https://raw.githubusercontent.com/${github.context.repo.owner.toLowerCase()}/${github.context.repo.repo}/${github.context.sha}`;
    let platforms = (await axios.get(`${urlBase}/${core.getInput('platform-file', {required: true})}`, {headers:{"Authorization": `Bearer ${core.getInput('password')}`}})).data;
 
    let missingPlatforms = [];  //platforms that need to be rebuilt
